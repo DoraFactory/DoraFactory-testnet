@@ -8,9 +8,9 @@ import (
 
 const (
 	// set token decimal
-	HumanCoinUnit = "DORA"
-	BaseCoinUnit  = "peaka"
-	DoraExponent  = 18
+	HumanCoinUnit = "Ddog"
+	BaseCoinUnit  = "uDdog"
+	DoraExponent  = 6
 
 	DefaultBondDenom = BaseCoinUnit
 )
@@ -46,11 +46,7 @@ func initSDKConfig() {
 
 
 const (
-	// Name      = "Dora Vota"
-	// AppName   = "dorad"
-    Version   = "0.2.0"
-	// Commit    = ""
-	// BuildTags = ""
+    Version   = "0.1.0"
 )
 
 func setVersionInfo() {

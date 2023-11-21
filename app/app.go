@@ -129,8 +129,8 @@ import (
 )
 
 const (
-	AccountAddressPrefix = "dora"
-	Name                 = "dora"
+	AccountAddressPrefix = "deardoge"
+	Name                 = "dog"
 	// If EnabledSpecificProposals is "", and this is "true", then enable all x/wasm proposals.
 	// If EnabledSpecificProposals is "", and this is not "true", then disable all x/wasm proposals.
 	ProposalsEnabled = "false"

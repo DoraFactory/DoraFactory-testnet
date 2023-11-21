@@ -7,7 +7,7 @@ import (
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 
 	"github.com/DoraFactory/doravota/app"
-	"github.com/DoraFactory/doravota/cmd/dorad/cmd"
+	"github.com/DoraFactory/doravota/cmd/dogd/cmd"
 )
 
 func main() {
