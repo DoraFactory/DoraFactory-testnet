@@ -8,8 +8,8 @@ import (
 
 const (
 	// set token decimal
-	HumanCoinUnit = "Ddog"
-	BaseCoinUnit  = "uDdog"
+	HumanCoinUnit = "ddog"
+	BaseCoinUnit  = "uddog"
 	DoraExponent  = 6
 
 	DefaultBondDenom = BaseCoinUnit
