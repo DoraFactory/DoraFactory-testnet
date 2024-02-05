@@ -93,7 +93,7 @@ import (
 	upgradeclient "github.com/cosmos/cosmos-sdk/x/upgrade/client"
 	upgradekeeper "github.com/cosmos/cosmos-sdk/x/upgrade/keeper"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
-	v0_3_1 "github.com/DoraFactory/doravota/app/upgrades/v0_3_1"
+	v0_3_2 "github.com/DoraFactory/doravota/app/upgrades/v0_3_2"
 	
 	ica "github.com/cosmos/ibc-go/v7/modules/apps/27-interchain-accounts"
 	icacontroller "github.com/cosmos/ibc-go/v7/modules/apps/27-interchain-accounts/controller"
@@ -1089,7 +1089,7 @@ func (app *App) ModuleManager() *module.Manager {
 
 func (app *App) setupUpgradeHandlers() {
     app.UpgradeKeeper.SetUpgradeHandler(
-        v0_3_1.UpgradeName,
+        v0_3_2.UpgradeName,
 		func(ctx sdk.Context, _ upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
 
 /* 			var valUpdates []abci.ValidatorUpdate
@@ -1130,11 +1130,11 @@ func (app *App) setupUpgradeHandlers() {
 
 			app.StakingKeeper.SetValidatorUpdates(ctx, valUpdates) */
 
-			validators := app.StakingKeeper.GetAllValidators(ctx)
+			// validators := app.StakingKeeper.GetAllValidators(ctx)
 
-			for _, validator := range validators {
-				app.StakingKeeper.SetValidatorByPowerIndex(ctx, validator)
-			}
+			// for _, validator := range validators {
+			// 	app.StakingKeeper.SetValidatorByPowerIndex(ctx, validator)
+			// }
 
 			return app.ModuleManager().RunMigrations(ctx, app.Configurator(), fromVM)
 		},
@@ -1151,7 +1151,7 @@ func (app *App) setupUpgradeHandlers() {
         return
     }
 
-	if upgradeInfo.Name == v0_3_1.UpgradeName {
+	if upgradeInfo.Name == v0_3_2.UpgradeName {
 		app.SetStoreLoader(upgradetypes.UpgradeStoreLoader(upgradeInfo.Height, &storetypes.StoreUpgrades{}))
 	}
 }
