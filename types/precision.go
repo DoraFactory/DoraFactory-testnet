@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	BaseDenomUnit = 18
+	BaseDenomUnit = 12
 )
 
 var DefaultPowerReduction = sdk.NewIntFromBigInt(new(big.Int).Exp(big.NewInt(10), big.NewInt(BaseDenomUnit), nil)) // 10^18

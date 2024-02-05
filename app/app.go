@@ -1130,11 +1130,11 @@ func (app *App) setupUpgradeHandlers() {
 
 			app.StakingKeeper.SetValidatorUpdates(ctx, valUpdates) */
 
-			validators := app.StakingKeeper.GetAllValidators(ctx)
+			// validators := app.StakingKeeper.GetAllValidators(ctx)
 
-			for _, validator := range validators {
-				app.StakingKeeper.SetValidatorByPowerIndex(ctx, validator)
-			}
+			// for _, validator := range validators {
+			// 	app.StakingKeeper.SetValidatorByPowerIndex(ctx, validator)
+			// }
 
 			return app.ModuleManager().RunMigrations(ctx, app.Configurator(), fromVM)
 		},
