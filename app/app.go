@@ -1,15 +1,11 @@
 package app
 
 import (
-	"encoding/json"
-	"fmt"
-	"io"
-	"os"
-	"path/filepath"
-	"strings"
 	"bytes"
 	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
 	reflectionv1 "cosmossdk.io/api/cosmos/reflection/v1"
+	"encoding/json"
+	"fmt"
 	v0_3_1 "github.com/DoraFactory/doravota/app/upgrades/v0_3_1"
 	dbm "github.com/cometbft/cometbft-db"
 	abci "github.com/cometbft/cometbft/abci/types"
@@ -24,6 +20,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/runtime"
 	runtimeservices "github.com/cosmos/cosmos-sdk/runtime/services"
+	"github.com/cosmos/cosmos-sdk/server"
 	"github.com/cosmos/cosmos-sdk/server/api"
 	"github.com/cosmos/cosmos-sdk/server/config"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
@@ -94,6 +91,15 @@ import (
 	upgradeclient "github.com/cosmos/cosmos-sdk/x/upgrade/client"
 	upgradekeeper "github.com/cosmos/cosmos-sdk/x/upgrade/keeper"
 	upgradetypes "github.com/cosmos/cosmos-sdk/x/upgrade/types"
+	"io"
+	"os"
+	"path/filepath"
+	"strings"
+	// "net/http"
+	// "strconv"
+	// "io/ioutil"
+
+	// "github.com/gorilla/mux"
 
 	ica "github.com/cosmos/ibc-go/v7/modules/apps/27-interchain-accounts"
 	icacontroller "github.com/cosmos/ibc-go/v7/modules/apps/27-interchain-accounts/controller"
@@ -1031,7 +1037,17 @@ func (app *App) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig
 
 	// register app's OpenAPI routes.
 	docs.RegisterOpenAPIService(Name, apiSvr.Router)
+
+	// register swagger API from root so that other applications can override easily
+	if err := server.RegisterSwaggerAPI(apiSvr.ClientCtx, apiSvr.Router, apiConfig.Swagger); err != nil {
+		panic(err)
+	}
+
+	if err:= app.RegisterCirculatingAPI(apiSvr.ClientCtx, apiSvr.Router); err != nil {
+		panic(err)
+	}
 }
+
 
 // RegisterTxService implements the Application.RegisterTxService method.
 func (app *App) RegisterTxService(clientCtx client.Context) {
@@ -1096,11 +1112,11 @@ func (app *App) setupUpgradeHandlers() {
 
 			logger.Info("staet change validator....")
 			for _, validator := range validators {
-				
+
 				// store := ctx.KVStore(app.)
 				store := ctx.KVStore(app.GetKey(stakingtypes.StoreKey))
 				logger.Info("get staking store ....")
-				
+
 				deleted := false
 
 				iterator := sdk.KVStorePrefixIterator(store, stakingtypes.ValidatorsByPowerIndexKey)
