@@ -97,19 +97,3 @@ func (app *App) getSomeCirculatingSupply(ctx client.Context) (string, error) {
 
    return res , nil
 }
-
-
-func getSupplyFromAPI(apiURL string) (string, error) {
-   response, err := http.Get(apiURL)
-   if err != nil {
-	   return "", err
-   }
-   defer response.Body.Close()
-
-   body, err := ioutil.ReadAll(response.Body)
-   if err != nil {
-	   return "", err
-   }
-
-   return string(body), nil
-}
